@@ -23,6 +23,10 @@ from datetime import date, timedelta
 
 
 def run(data):
+    if not isinstance(data, dict):
+        raise ValueError("A entrada deve ser um objeto JSON.")
+    if not isinstance(data["mensagens"], list) or any(not isinstance(item, dict) for item in data["mensagens"]):
+        raise ValueError("O campo mensagens deve ser uma lista de objetos.")
     atual = date.fromisoformat(texto(data["inicio"]))
     intervalo = timedelta(weeks=inteiro(data["intervalo_semanas"], 1))
     bloqueios = {date.fromisoformat(dia) for dia in textos(data["bloqueios"])}
@@ -60,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
