@@ -28,15 +28,25 @@ def run(data):
     if not isinstance(data["mensagens"], list) or any(not isinstance(item, dict) for item in data["mensagens"]):
         raise ValueError("O campo mensagens deve ser uma lista de objetos.")
     atual = date.fromisoformat(texto(data["inicio"]))
-    intervalo = timedelta(weeks=inteiro(data["intervalo_semanas"], 1))
+    try:
+        intervalo = timedelta(weeks=inteiro(data["intervalo_semanas"], 1))
+    except OverflowError as exc:
+        raise ValueError("O intervalo excede o limite do calendário.") from exc
     bloqueios = {date.fromisoformat(dia) for dia in textos(data["bloqueios"])}
     agenda = []
-    for item in data["mensagens"]:
+    def proxima(dia):
+        try:
+            return dia + intervalo
+        except OverflowError as exc:
+            raise ValueError("A agenda ultrapassa o limite de datas suportado.") from exc
+
+    for indice, item in enumerate(data["mensagens"]):
+        if indice:
+            atual = proxima(atual)
         while atual in bloqueios:
-            atual += intervalo
+            atual = proxima(atual)
         agenda.append({"data": atual.isoformat(), "titulo": texto(item["titulo"]),
                        "referencia": texto(item["referencia"])})
-        atual += intervalo
     return {"agenda": agenda, "ultima_data": agenda[-1]["data"] if agenda else None}
 
 
