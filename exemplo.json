@@ -1,0 +1,17 @@
+{
+  "inicio": "2026-12-06",
+  "intervalo_semanas": 1,
+  "bloqueios": [
+    "2026-12-13"
+  ],
+  "mensagens": [
+    {
+      "titulo": "Alegria em oração",
+      "referencia": "Filipenses 1:3–11"
+    },
+    {
+      "titulo": "Unidade e humildade",
+      "referencia": "Filipenses 2:1–11"
+    }
+  ]
+}
