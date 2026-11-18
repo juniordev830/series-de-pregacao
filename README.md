@@ -33,3 +33,7 @@ node exportar-agenda.mjs < agenda.json > serie.ics
 
 Importe `serie.ics` no seu aplicativo de calendário. No exemplo, as mensagens
 ficam em 6 e 20 de dezembro porque o dia 13 está reservado.
+
+## Exportação para planilha
+
+Use `python app.py exemplo.json --csv > relatorio.csv` para exportar as datas e passagens da série. O CSV usa ponto e vírgula, conserva a ordem do relatório e inclui o cabeçalho mesmo quando a seleção está vazia. O JSON continua sendo a saída padrão.
